@@ -1,0 +1,74 @@
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Todolist</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'todolist/css/bootstrap/bootstrap.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'todolist/css/main.css' %}">
+</head>
+<body>
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-6">
+	            <div class="todolist not-done">
+	            <h1>Danh sách công việc</h1>
+					<form action="{% url 'todolist:add' %}" method="POST">
+						{% csrf_token %}
+		                <input type="text" name="context" id="context" class="form-control add-todo" placeholder="Add to do...">
+		                <span>
+		                	Deadline: <input type="date" name="deadline" class="form-control">
+		                </span>
+		                <button style="margin-top: 10px;" id="checkAll" class="btn btn-primary">Add</button>
+		                <hr>
+		            </form>
+		            <form action="{% url 'todolist:done' %}" method="POST">
+		            	{% csrf_token %}
+		                {% if tasks_list %}
+			                <ul id="sortable" class="list-unstyled">
+			                {% for task in tasks_list %}
+			                	{% if task.status == 0 %}
+				                    <li class="ui-state-default">
+				                        <div class="checkbox">
+				                            <label>
+				                                <input type="checkbox" name="task{{task.id}}" value="{{task.id}}"/>{{task.context}}
+				                            </label>
+				                            <label style="float: right;">
+				                            	{{task.deadline|date:"d/m/y"}}
+				                            </label>
+				                        </div>
+				                    </li>
+				                {% endif %}
+			                {% endfor %}
+			                </ul>
+		                {% else %}
+		                	<p> No tasks </p>
+		                {% endif %}
+		                <button style="margin-top: 10px;" id="checkAll" class="btn btn-success">Đánh dấu là đã xong</button>
+	                </form>
+	            </div>
+	        </div>
+	        <div class="col-md-6">
+	            <div class="todolist">
+	             <h1>Công việc đã xong</h1>
+	              	{% if tasks_list %}
+	                	<ul id="done-items" class="list-unstyled">            
+	                	{% for task in tasks_list %}
+		                	{% if task.status == 1 %}
+			                    <li>
+			                    	{{task.context}}
+			                    	<button class="remove-item btn btn-default btn-xs pull-right">
+			                    		<span class="glyphicon glyphicon-remove"></span>
+			                    	</button>
+			                    </li>
+			                {% endif %}
+		                {% endfor %}
+		            </ul>
+		            {% else %}
+	                	<p> No tasks </p>
+	                {% endif %}
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>
