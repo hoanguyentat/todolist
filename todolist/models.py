@@ -9,4 +9,3 @@ class Task(models.Model):
 	pub_date = models.DateTimeField('date published')
 	status = models.IntegerField(default=0)
 	deadline =  models.DateTimeField('date published')
-		

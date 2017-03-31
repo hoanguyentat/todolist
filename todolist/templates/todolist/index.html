@@ -56,9 +56,9 @@
 		                	{% if task.status == 1 %}
 			                    <li>
 			                    	{{task.context}}
-			                    	<button class="remove-item btn btn-default btn-xs pull-right">
+			                    	<a href="{% url 'todolist:delete' task.id %}" class="remove-item btn btn-default btn-xs pull-right">
 			                    		<span class="glyphicon glyphicon-remove"></span>
-			                    	</button>
+			                    	</a>
 			                    </li>
 			                {% endif %}
 		                {% endfor %}

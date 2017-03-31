@@ -3,6 +3,10 @@ from django.http import Http404, HttpRequest, HttpResponse, HttpResponseRedirect
 from .models import Task
 from django.urls import reverse
 from datetime import datetime
+
+import sys
+reload(sys)
+sys.setdefaultencoding('UTF8')
 # Create your views here.
 
 def index(request):
@@ -27,4 +31,11 @@ def done_task(request):
 			task = get_object_or_404(Task,pk=data[x])
 			task.status = 1
 			task.save()
+	return redirect('/todolist')
+def delete_task(request, task_id):
+	try:
+		task = get_object_or_404(Task, pk = task_id)
+		task.delete()
+	except Exception as e:
+		return HttpResponse("Error not found...")
 	return redirect('/todolist')
