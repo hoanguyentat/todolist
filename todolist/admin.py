@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import Task
 import sys
-reload(sys)  
-# Reload does the trick!
+
+reload(sys)
 sys.setdefaultencoding('UTF8')
 # Register your models here.
 

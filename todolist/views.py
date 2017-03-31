@@ -4,9 +4,6 @@ from .models import Task
 from django.urls import reverse
 from datetime import datetime
 
-import sys
-reload(sys)
-sys.setdefaultencoding('UTF8')
 # Create your views here.
 
 def index(request):
